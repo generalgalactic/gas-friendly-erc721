@@ -1,1 +1,1 @@
-# gas-friendly-erc721
+# Gas friendly ERC721
