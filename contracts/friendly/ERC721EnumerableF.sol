@@ -36,10 +36,6 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
         override
         returns (uint256)
     {
-        require(
-            index < ERC721F.balanceOf(owner),
-            "ERC721Enumerable: owner index out of bounds"
-        );
         uint256 currentIndex = 0;
         for (uint256 i = 0; i < _tokens.length; i++) {
             if (_tokens[i] == owner) {
@@ -49,6 +45,7 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
                 currentIndex += 1;
             }
         }
+        revert("ERC721Enumerable: owner index out of bounds");
     }
 
     /**
