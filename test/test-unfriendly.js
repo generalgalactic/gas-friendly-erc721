@@ -2,15 +2,19 @@ const { expect } = require("chai");
 const { ethers } = require("hardhat");
 
 describe("UnfriendlyNFT", function () {
-  let hardhatToken;
+  let contractFactory;
   let owner;
   let signers;
 
-  beforeEach(async function () {
+  beforeEach(async () => {
     [owner, ...signers] = await ethers.getSigners();
-    const dToken = await ethers.getContractFactory("UnfriendlyNFT");
-    hardhatToken = await dToken.deploy();
+    contractFactory = await ethers.getContractFactory("UnfriendlyNFT");
   });
 
-  describe("Test", function () {});
+  describe("Unfriendly NFT", async function () {
+    it("Should do something", async () => {
+      contract = await contractFactory.deploy();
+      await contract.safeMint(signers[0].address);
+    });
+  });
 });
