@@ -1,0 +1,1 @@
+# gas-friendly-erc721
