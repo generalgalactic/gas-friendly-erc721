@@ -3,6 +3,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+// Goal: Remove as many writes from _mint() as possible
+// Secondary Goal: Assume it's cheaper to push onto an array than manipulate a mapping
+
 contract MyToken is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
 
@@ -10,6 +13,11 @@ contract MyToken is ERC721, ERC721Enumerable, Ownable {
 
     constructor() ERC721("MyToken", "MTK") {}
 
+    // TODO: add ERC721Enumerable methods
+    // TODO: make initial tokenIndex configurable to start at 1 in the constructor by minting token:0 to address(0)
+    // TODO: handle totalSuuply()
+
+    // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/ERC721.sol#L280-L290
     function safeMint(address to) public onlyOwner {
         uint256 tokenId = _tokenIdCounter.current();
         _tokenIdCounter.increment();
@@ -18,6 +26,7 @@ contract MyToken is ERC721, ERC721Enumerable, Ownable {
 
     // The following functions are overrides required by Solidity.
 
+    // https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721Enumerable.sol#L72-L89
     function _beforeTokenTransfer(address from, address to, uint256 tokenId)
         internal
         override(ERC721, ERC721Enumerable)
