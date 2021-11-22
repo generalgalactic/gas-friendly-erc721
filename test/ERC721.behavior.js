@@ -5,13 +5,10 @@ const {
   expectRevert,
 } = require("@openzeppelin/test-helpers");
 const { expect } = require("chai");
+const { ethers } = require("hardhat");
+require("chai").should();
+
 const { ZERO_ADDRESS } = constants;
-
-const {
-  shouldSupportInterfaces,
-} = require("../../utils/introspection/SupportsInterface.behavior");
-
-const ERC721ReceiverMock = artifacts.require("ERC721ReceiverMock");
 
 const Error = [
   "None",
@@ -20,10 +17,10 @@ const Error = [
   "Panic",
 ].reduce((acc, entry, idx) => Object.assign({ [entry]: idx }, acc), {});
 
-const firstTokenId = new BN("5042");
-const secondTokenId = new BN("79217");
-const nonExistentTokenId = new BN("13");
-const fourthTokenId = new BN(4);
+const firstTokenId = 5042;
+const secondTokenId = 79217;
+const nonExistentTokenId = 13;
+const fourthTokenId = 4;
 const baseURI = "https://api.example.com/v1/";
 
 const RECEIVER_MAGIC_VALUE = "0x150b7a02";
@@ -37,8 +34,6 @@ function shouldBehaveLikeERC721(
   operator,
   other
 ) {
-  shouldSupportInterfaces(["ERC165", "ERC721"]);
-
   context("with minted tokens", function () {
     beforeEach(async function () {
       await this.token.mint(owner, firstTokenId);
@@ -100,8 +95,8 @@ function shouldBehaveLikeERC721(
       let logs = null;
 
       beforeEach(async function () {
-        await this.token.approve(approved, tokenId, { from: owner });
-        await this.token.setApprovalForAll(operator, true, { from: owner });
+        await this.token.connect(owner).approve(approved, tokenId);
+        await this.token.connect(owner).setApprovalForAll(operator, true);
       });
 
       const transferWasSuccessful = function ({ owner, tokenId, approved }) {
@@ -330,9 +325,12 @@ function shouldBehaveLikeERC721(
             shouldTransferTokensByUsers(transferFun);
           });
 
-          describe("to a valid receiver contract", function () {
+          describe("to a valid receiver contract", async function () {
             beforeEach(async function () {
-              this.receiver = await ERC721ReceiverMock.new(
+              const ERC721ReceiverFactory = await ethers.getContractFactory(
+                "ERC721ReceiverMock"
+              );
+              this.receiver = await ERC721ReceiverMock.deploy(
                 RECEIVER_MAGIC_VALUE,
                 Error.None
               );
@@ -1026,8 +1024,6 @@ function shouldBehaveLikeERC721Enumerable(
   operator,
   other
 ) {
-  shouldSupportInterfaces(["ERC721Enumerable"]);
-
   context("with minted tokens", function () {
     beforeEach(async function () {
       await this.token.mint(owner, firstTokenId);
@@ -1217,8 +1213,6 @@ function shouldBehaveLikeERC721Enumerable(
 }
 
 function shouldBehaveLikeERC721Metadata(errorPrefix, name, symbol, owner) {
-  shouldSupportInterfaces(["ERC721Metadata"]);
-
   describe("metadata", function () {
     it("has a name", async function () {
       expect(await this.token.name()).to.be.equal(name);

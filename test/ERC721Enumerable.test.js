@@ -3,15 +3,23 @@ const {
   shouldBehaveLikeERC721Metadata,
   shouldBehaveLikeERC721Enumerable,
 } = require("./ERC721.behavior.js");
+const { ethers } = require("hardhat");
+const { accounts } = require("@openzeppelin/test-environment");
 
-const ERC721Mock = artifacts.require("ERC721EnumerableMock");
-
-contract("ERC721Enumerable", function (accounts) {
+describe("ERC721Enumerable", function () {
   const name = "Non Fungible Token";
   const symbol = "NFT";
 
   beforeEach(async function () {
-    this.token = await ERC721Mock.new(name, symbol);
+    try {
+      const ERC721Factory = await ethers.getContractFactory(
+        "ERC721EnumerableMock"
+      );
+      this.token = await ERC721Factory.deploy(name, symbol);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
   });
 
   shouldBehaveLikeERC721("ERC721", ...accounts);
