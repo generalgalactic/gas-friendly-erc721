@@ -1,0 +1,26 @@
+const { expect } = require("chai");
+const { ethers } = require("hardhat");
+const {
+  shouldBehaveLikeERC721,
+  shouldBehaveLikeERC721Metadata,
+  shouldBehaveLikeERC721Enumerable,
+} = require("./test.behaviors.js");
+
+describe("UnfriendlyNFT", function () {
+  let contractFactory;
+  let token;
+  const name = "UnfriendlyNFT";
+  const symbol = "SAD";
+  let owner, newOwner, approved, anotherApproved, operator, other;
+
+  beforeEach(async () => {
+    contractFactory = await ethers.getContractFactory("UnfriendlyNFT");
+    token = await contractFactory.deploy(name, symbol);
+    [owner, newOwner, approved, anotherApproved, operator, other] =
+      await ethers.getSigners();
+  });
+
+  shouldBehaveLikeERC721("ERC721");
+  shouldBehaveLikeERC721Metadata("ERC721", name, symbol);
+  shouldBehaveLikeERC721Enumerable("ERC721");
+});

@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 contract UnfriendlyNFT is ERC721Enumerable {
     uint256 public totalTokens;
 
-    constructor() ERC721("UnfriendlyNFT", "SAD") {}
+    constructor(string memory _name, string memory _symbol) ERC721(_name, _symbol) {}
 
     function safeMint(address to) public {
         totalTokens += 1;

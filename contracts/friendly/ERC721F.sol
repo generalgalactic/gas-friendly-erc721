@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.8.10;
+import "hardhat/console.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol";
@@ -72,7 +73,10 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
             "ERC721: balance query for the zero address"
         );
         uint256 balance = 0;
+        console.log("Tokens Length", _tokens.length);
+        console.log("Owner", owner);
         for (uint256 i = 0; i < _tokens.length; i++) {
+            console.log("Checking", i);
             if (_tokens[i] == owner) {
                 balance += 1;
             }
@@ -358,10 +362,11 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
     function _mint(address to, uint256 tokenId) internal virtual {
         require(to != address(0), "ERC721: mint to the zero address");
         require(_tokens.length <= tokenId, "ERC721: token already minted");
-
+        console.log("Calling before hook");
         _beforeTokenTransfer(address(0), to, tokenId);
+        console.log("Adding", to, "to tokens");
         _tokens.push(to);
-
+        console.log("Emitting transfer event");
         emit Transfer(address(0), to, tokenId);
     }
 
