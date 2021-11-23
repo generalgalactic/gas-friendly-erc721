@@ -17,7 +17,13 @@ contract FriendlyNFT is ERC721EnumerableF {
         _mint(to, tokenId);
     }
 
-     function burn(uint256 tokenId) public {
+    function burn(uint256 tokenId) public {
         _burn(tokenId);
+    }
+
+    function mintMulti(uint total, address to) public {
+        for (uint i; i < total; i++) {
+            safeMint(to);
+        }
     }
 }

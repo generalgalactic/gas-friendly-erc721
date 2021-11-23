@@ -1,15 +1,41 @@
-const {
-  shouldBehaveLikeERC721,
-  shouldBehaveLikeERC721Metadata,
-  shouldBehaveLikeERC721Enumerable,
-} = require("./test.behaviors.js");
+["FriendlyNFT", "FriendlyNFT2", "UnfriendlyNFT"].forEach((CONTRACT) => {
+  describe(CONTRACT, async function () {
+    let contractFactory;
+    let owner;
+    let signers;
 
-const contractName = "FriendlyNFT";
-const name = "Friendly NFT";
-const symbol = "HAPY";
+    beforeEach(async () => {
+      [owner, ...signers] = await ethers.getSigners();
+      contractFactory = await ethers.getContractFactory(CONTRACT);
+    });
 
-describe("FriendlyNFT", function () {
-  shouldBehaveLikeERC721("ERC721", contractName, name, symbol);
-  shouldBehaveLikeERC721Metadata("ERC721", contractName, name, symbol);
-  shouldBehaveLikeERC721Enumerable("ERC721", contractName, name, symbol);
+    describe("Minting", async function () {
+      it("Can Mint 1", async () => {
+        contract = await contractFactory.deploy();
+        await expect(contract.safeMint(signers[0].address)).to.emit(
+          contract,
+          "Transfer"
+        );
+      });
+      it("Can Mint 100", async () => {
+        contract = await contractFactory.deploy();
+        await expect(contract.mintMulti(100, signers[0].address)).to.emit(
+          contract,
+          "Transfer"
+        );
+      });
+    });
+    describe("Reading", async function () {
+      it("Can get totalSupply() after minting 1", async () => {
+        contract = await contractFactory.deploy();
+        await contract.safeMint(signers[0].address);
+        expect((await contract.totalSupply()).toNumber()).to.equal(1);
+      });
+      it("Can get totalSupply() after minting 500", async () => {
+        contract = await contractFactory.deploy();
+        await contract.mintMulti(100, signers[0].address);
+        expect((await contract.totalSupply()).toNumber()).to.equal(100);
+      });
+    });
+  });
 });
