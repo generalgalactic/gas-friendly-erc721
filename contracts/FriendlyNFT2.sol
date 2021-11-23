@@ -1,12 +1,12 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.10;
 
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "./friendly/ERC721EnumerableF2.sol";
 
-contract UnfriendlyNFT is ERC721Enumerable {
+contract FriendlyNFT2 is ERC721EnumerableF2 {
     uint256 public totalTokens;
 
-    constructor() ERC721("UnfriendlyNFT", "SAD") {}
+    constructor() ERC721F2("FriendlyNFT2", "HAPY2", 10000) {}
 
     function safeMint(address to) public {
         totalTokens += 1;

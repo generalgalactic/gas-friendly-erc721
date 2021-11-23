@@ -12,4 +12,9 @@ contract FriendlyNFT is ERC721EnumerableF {
         totalTokens += 1;
         _safeMint(to, totalTokens);
     }
+    function mintMulti(uint total, address to) public {
+      for (uint i; i < total; i++) {
+        safeMint(to);
+      }
+    }
 }

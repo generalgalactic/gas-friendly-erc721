@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.10;
 
-import "./ERC721F.sol";
+import "./ERC721F2.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 
 /**
@@ -10,7 +10,7 @@ import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
  * enumerability of all the token ids in the contract as well as all token ids owned by each
  * account.
  */
-abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
+abstract contract ERC721EnumerableF2 is ERC721F2, IERC721Enumerable {
     /**
      * @dev See {IERC165-supportsInterface}.
      */
@@ -18,7 +18,7 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
         public
         view
         virtual
-        override(IERC165, ERC721F)
+        override(IERC165, ERC721F2)
         returns (bool)
     {
         return
@@ -37,7 +37,7 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
         returns (uint256)
     {
         uint256 currentIndex = 0;
-        for (uint256 i = 0; i < _tokens.length; i++) {
+        for (uint256 i = 0; i < _maxTokenVal; i++) {
             if (_tokens[i] == owner) {
                 if (currentIndex == index) {
                     return i;
@@ -53,7 +53,7 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
      */
     function totalSupply() public view virtual override returns (uint256) {
         uint256 supply = 0;
-        for (uint256 i = 0; i < _tokens.length; i++) {
+        for (uint256 i = 0; i < _maxTokenVal; i++) {
             if (_tokens[i] != address(0)) {
                 supply += 1;
             }
@@ -72,7 +72,7 @@ abstract contract ERC721EnumerableF is ERC721F, IERC721Enumerable {
         returns (uint256)
     {
         uint256 currentIndex = 0;
-        for (uint256 i = 0; i < _tokens.length; i++) {
+        for (uint256 i = 0; i < _maxTokenVal; i++) {
             if (_tokens[i] != address(0)) {
                 if (currentIndex == index) {
                     return i;
