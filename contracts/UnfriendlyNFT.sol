@@ -8,13 +8,16 @@ contract UnfriendlyNFT is ERC721Enumerable {
 
     constructor() ERC721("UnfriendlyNFT", "SAD") {}
 
-    function safeMint(address to) public {
+    function mint(address to) public {
+        _mint(to, totalTokens);
         totalTokens += 1;
-        _safeMint(to, totalTokens);
     }
     function mintMulti(uint total, address to) public {
       for (uint i; i < total; i++) {
-        safeMint(to);
+        mint(to);
       }
+    }
+    function burn(uint tokenId) public {
+      _burn(tokenId);
     }
 }

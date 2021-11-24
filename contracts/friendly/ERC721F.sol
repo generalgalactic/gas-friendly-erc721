@@ -23,6 +23,7 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
 
     // Token symbol
     string private _symbol;
+    uint256 internal _burnCount;
 
     // Array of all tokens storing the owner's address
     address[] internal _tokens;
@@ -323,8 +324,8 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function _safeMint(address to, uint256 tokenId) internal virtual {
-        _safeMint(to, tokenId, "");
+    function _safeMint(address to) internal virtual {
+        _safeMint(to, "");
     }
 
     /**
@@ -333,14 +334,13 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
      */
     function _safeMint(
         address to,
-        uint256 tokenId,
         bytes memory _data
     ) internal virtual {
-        _mint(to, tokenId);
         require(
-            _checkOnERC721Received(address(0), to, tokenId, _data),
+            _checkOnERC721Received(address(0), to, _tokens.length, _data),
             "ERC721: transfer to non ERC721Receiver implementer"
         );
+        _mint(to);
     }
 
     /**
@@ -355,14 +355,13 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
      *
      * Emits a {Transfer} event.
      */
-    function _mint(address to, uint256 tokenId) internal virtual {
+    function _mint(address to) internal virtual {
         require(to != address(0), "ERC721: mint to the zero address");
-        require(_tokens.length <= tokenId, "ERC721: token already minted");
 
-        _beforeTokenTransfer(address(0), to, tokenId);
+        _beforeTokenTransfer(address(0), to, _tokens.length);
         _tokens.push(to);
 
-        emit Transfer(address(0), to, tokenId);
+        emit Transfer(address(0), to, _tokens.length - 1);
     }
 
     /**
@@ -382,7 +381,7 @@ contract ERC721F is Context, ERC165, IERC721, IERC721Metadata {
 
         // Clear approvals
         _approve(address(0), tokenId);
-
+        _burnCount++;
         _tokens[tokenId] = address(0);
 
         emit Transfer(owner, address(0), tokenId);
