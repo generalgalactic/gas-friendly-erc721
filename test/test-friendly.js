@@ -64,6 +64,7 @@ const { ethers } = require("hardhat");
         expect((await contract.tokenByIndex(total - 1)).toNumber()).to.equal(total - 1);
       });
       it(`tokenByIndex(999) should equal ${1000} if one was burned`, async () => {
+
         // THIS IS CONFUSING
         // We think OpenZeppelin is wrong
         // await contract.burn(4);
