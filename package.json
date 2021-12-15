@@ -25,7 +25,7 @@
     "solhint": "^3.3.6",
     "solidity-coverage": "^0.7.17",
     "ethers": "^5.5.2",
-    "hardhat": "^2.7.1",
+    "hardhat": "^2.8.0",
     "hardhat-contract-sizer": "^2.1.1",
     "hardhat-deploy": "^0.9.14",
     "hardhat-gas-reporter": "^1.0.6",
