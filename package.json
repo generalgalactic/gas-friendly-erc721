@@ -2,7 +2,7 @@
   "name": "friendly-nft",
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
-    "@commitlint/config-conventional": "^15.0.0",
+    "@commitlint/config-conventional": "^16.0.0",
     "@eth-optimism/hardhat-ovm": "^0.2.4",
     "@nomiclabs/hardhat-ethers": "^2.0.3",
     "@nomiclabs/hardhat-etherscan": "^2.1.8",
