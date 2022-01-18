@@ -5260,10 +5260,10 @@ hard-rejection@^2.1.0:
   resolved "https://registry.yarnpkg.com/hard-rejection/-/hard-rejection-2.1.0.tgz#1c6eda5c1685c63942766d79bb40ae773cecd883"
   integrity sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==
 
-hardhat-contract-sizer@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/hardhat-contract-sizer/-/hardhat-contract-sizer-2.3.1.tgz#3759389943a5c6fbc3e29b90ef140bf341f935f6"
-  integrity sha512-pW4DoJAgkP2ouLs7Fbg8rqNbFDQ2oz1sv2jkE9DWObzd0IG42YonXK4unQLCHvEUWzbp68sBjPCnrDMoc/JZfA==
+hardhat-contract-sizer@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/hardhat-contract-sizer/-/hardhat-contract-sizer-2.4.0.tgz#3cc125937aa3d773283851085de99c9bd31a7828"
+  integrity sha512-ww+Fw5Fq+q6gkVxB8KFvicqZFH5pH9HGZwV4ZSTxd0QrxA162qzLdbScJseUP30VvIBPYN9wpdj0cWlz6M9j6g==
   dependencies:
     chalk "^4.0.0"
     cli-table3 "^0.6.0"
