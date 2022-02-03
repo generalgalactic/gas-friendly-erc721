@@ -1,11 +1,11 @@
 //SPDX-License-Identifier: Unlicense
 pragma solidity ^0.8.10;
 
-import "./friendly/ERC721EnumerableF.sol";
+import "./friendly/ERC721S.sol";
 
-contract FriendlyNFT is ERC721EnumerableF {
+contract ERC721S_TEST is ERC721Sequential {
 
-    constructor() ERC721F("FriendlyNFT", "HAPY") {}
+    constructor() ERC721Sequential("FriendlyNFT", "HAPY") {}
 
     function mint(address to) public {
         _mint(to);
