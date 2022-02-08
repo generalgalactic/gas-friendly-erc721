@@ -27,7 +27,7 @@
     "ethers": "^5.5.4",
     "hardhat": "^2.8.3",
     "hardhat-contract-sizer": "^2.4.0",
-    "hardhat-deploy": "^0.10.4",
+    "hardhat-deploy": "^0.10.5",
     "hardhat-gas-reporter": "^1.0.7",
     "husky": "^7.0.4",
     "node-watch": "^0.7.3",
